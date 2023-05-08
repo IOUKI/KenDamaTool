@@ -20,8 +20,8 @@
 </template>
 
 <script setup>
-import { onMounted, defineComponent } from 'vue'
-import { initFlowbite } from 'flowbite'
+import { onMounted, defineComponent, nextTick } from 'vue'
+import { initFlowbite, initModals } from 'flowbite'
 import Sidebar from './components/Sidebar.vue'
 
 defineComponent({
@@ -31,6 +31,8 @@ defineComponent({
 })
 
 onMounted(() => {
-    initFlowbite();
+    nextTick(() => {
+        initFlowbite();
+    })
 })
 </script>
