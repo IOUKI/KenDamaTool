@@ -10,6 +10,11 @@ const routes = [
         path: '/counter',
         name: 'Counter',
         component: () => import('@/views/Counter.vue')
+    },
+    {
+        path: '/lightningBattle',
+        name: 'LightningBattle',
+        component: () => import('@/views/LightningBattle.vue')
     }
 ]
 
