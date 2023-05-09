@@ -18,7 +18,7 @@
             </template>
             <template #modalContent>
                 <h3 class="text-3xl mb-3">遊玩方式</h3>
-                <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+                <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400 mb-3">
                     <li>
                         遊玩人數為2
                     </li>
@@ -38,6 +38,7 @@
                         最後有一方時間倒數為零的時候，那方就輸了(End)
                     </li>
                 </ul>
+                <h3 class="text-3xl">準備開始時，請將手機改為橫幅</h3>
             </template>
         </ContentTitle>
 
@@ -47,54 +48,64 @@
         </div>
 
         <div class="w-full h-auto flex justify-end">
-            <button @click="readyStart" type="button"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            <button
+                @click="readyStart" 
+                type="button" 
+                class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                 準備開始
             </button>
         </div>
 
+        <!-- 倒數畫面 -->
+        <div ref="playGround" class="w-full h-full text-white fixed top-0 left-0 hidden bg-gradient-to-r from-red-700 to-blue-700">
+            <div class="w-full h-auto flex justify-center">
+                <div @click="gameOver" class="flex absolute top-4">
+                    <span class="w-10 h-10 cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z" />
+                            <path fill-rule="evenodd"
+                                d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+                        </svg>
+                    </span>
+                    <h3 class="text-4xl">退出</h3>
+                </div>
+            </div>
+            <div class="w-full h-full flex">
+                <div @click="play2Start" class="w-1/2 h-full text-8xl flex justify-center items-center">
+                    <div class="text-center">
+                        <p ref="play1Time">
+                            {{ play1.min }}:{{ play1.sec }}
+                        </p>
+                    </div>
+                </div>
+                <div @click="play1Start" class="w-1/2 h-full text-8xl flex justify-center items-center">
+                    <div class="text-center">
+                        <!-- <h2 v-if="gameStart == false" class="w-full text-xl animate-bounce">請幫起手的玩家點擊自己的時間開始遊戲</h2> -->
+                        <p ref="play2Time">
+                            {{ play2.min }}:{{ play2.sec }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div v-if="gameStart == false" class="w-full h-auto flex justify-center">
+                <div class="flex absolute bottom-7">
+                    <h3 class="text-xl animate-bounce">請幫起手的玩家點擊自己的時間開始遊戲</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- 結束畫面 -->
+        <div @click="gameOver" ref="awards" class="w-full h-full fixed top-0 left-0 hidden text-white bg-gray-900">
+            <div class="w-full h-full flex justify-center items-center text-9xl">
+                <h1 v-if="play1Running" class="animate-neon-dark">BLUE WIN!</h1>
+                <h1 v-if="play2Running" class="animate-neon-dark">RED WIN!</h1>
+                <h5 class="text-gray-500 text-xl absolute bottom-3">點擊畫面任意處退出</h5>
+            </div>
+        </div>
     </ContentLayout>
 
-    <div ref="playGround" class="w-full h-full fixed top-0 left-0 hidden bg-gradient-to-r from-red-700 to-blue-700">
-        <div class="w-full h-auto flex justify-center">
-            <span class="w-10 h-10 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z" />
-                    <path fill-rule="evenodd"
-                        d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
-                </svg>
-            </span>
-            <h3 class="text-4xl">退出</h3>
-        </div>
-        <div class="w-full h-full flex">
-            <div @click="play2Start" class="w-1/2 h-full text-8xl flex justify-center items-center">
-                <div class="text-center">
-                    <h2 v-if="gameStart == false" class="w-full text-xl animate-bounce">請起手玩家點擊時間開始遊戲</h2>
-                    <p ref="play1Time" class="text-black">
-                        {{ play1.min }}:{{ play1.sec }}
-                    </p>
-                </div>
-            </div>
-            <div @click="play1Start" class="w-1/2 h-full text-8xl flex justify-center items-center">
-                <div class="text-center">
-                    <h2 v-if="gameStart == false" class="w-full text-xl animate-bounce">請起手玩家點擊時間開始遊戲</h2>
-                    <p ref="play2Time" class="text-black">
-                        {{ play2.min }}:{{ play2.sec }}
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div @click="gameOver" ref="awards" class="w-full h-full fixed top-0 left-0 hidden bg-gray-900">
-        <div class="w-full h-full flex justify-center items-center text-9xl">
-            <h1 v-if="play1Running" class="animate-neon">BLUE WIN!</h1>
-            <h1 v-if="play2Running" class="animate-neon">RED WIN!</h1>
-            <h5 class="text-gray-500 text-xl absolute bottom-3">點擊畫面任意處退出</h5>
-        </div>
-    </div>
 </template>
 
 <script setup>
@@ -228,6 +239,7 @@ const gameOver = () => {
     play2Running.value = false 
     play1Time.value.classList.remove('animate-bounce')
     play2Time.value.classList.remove('animate-bounce')
+    playGround.value.classList.add('hidden')
     awards.value.classList.add('hidden')
 }
 

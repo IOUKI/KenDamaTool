@@ -42,7 +42,7 @@
             </template>
         </ContentTitle>
         <div class="w-full h-auto my-20 flex justify-center">
-            <h5 class="text-7xl animate-neon">{{ count }}</h5>
+            <h5 class="text-7xl animate-neon dark:animate-neon-dark">{{ count }}</h5>
         </div>
         <div class="w-full h-auto my-3 flex justify-center animate-neon">
             <button type="button" @click="countAdd"

@@ -15,6 +15,11 @@ const routes = [
         path: '/lightningBattle',
         name: 'LightningBattle',
         component: () => import('@/views/LightningBattle.vue')
+    },
+    {
+        path: '/battle',
+        name: 'Battle',
+        component: () => import('@/views/Battle.vue')
     }
 ]
 
