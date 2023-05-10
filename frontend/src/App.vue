@@ -1,5 +1,6 @@
 <template>
     <div class="w-full h-auto">
+        <Loading></Loading>
         <Sidebar></Sidebar>
         <!-- Sidebar Toggle start -->
         <div class="dark:bg-gray-900">
@@ -23,10 +24,12 @@
 import { onMounted, defineComponent, nextTick } from 'vue'
 import { initFlowbite, initModals } from 'flowbite'
 import Sidebar from './components/Sidebar.vue'
+import Loading from './components/Loading.vue'
 
 defineComponent({
     components: {
         Sidebar,
+        Loading,
     }
 })
 

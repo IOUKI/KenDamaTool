@@ -9,7 +9,7 @@ export default {
         extend: {
             animation: {
                 neon: 'neon 1.5s ease-in-out infinite alternate',
-                'neon-dark': 'neon-dark 1.5s ease-in-out infinite alternate'
+                'neon-dark': 'neon-dark 1.5s ease-in-out infinite alternate',
             },
             keyframes: {
                 neon: {
@@ -29,7 +29,7 @@ export default {
                         'text-shadow': '0 0 50px #fff, 0 0 150px #fff, 0 0 50px #fff',
                         'color': 'lightblue'
                     }
-                }
+                },
             }
         },
     },
