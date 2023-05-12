@@ -57,7 +57,8 @@
         </div>
 
         <!-- 倒數畫面 -->
-        <div ref="playGround" class="w-full h-full text-white fixed top-0 left-0 hidden bg-gradient-to-r from-red-700 to-blue-700">
+        <div ref="playGround" class="w-full h-full text-white fixed top-0 left-0 hidden bg-gradient-to-r from-red-700 to-blue-700 z-50">
+            <!-- 退出按鈕 -->
             <div class="w-full h-auto flex justify-center">
                 <div @click="gameOver" class="flex absolute top-4">
                     <span class="w-10 h-10 cursor-pointer">
@@ -72,7 +73,8 @@
                     <h3 class="text-4xl">退出</h3>
                 </div>
             </div>
-            <div class="w-full h-full flex">
+            <!-- 玩家1和玩家2時間字串 -->
+            <div class="w-full h-full flex text-black">
                 <div @click="play2Start" class="w-1/2 h-full text-8xl flex justify-center items-center">
                     <div class="text-center">
                         <p ref="play1Time">
@@ -82,26 +84,26 @@
                 </div>
                 <div @click="play1Start" class="w-1/2 h-full text-8xl flex justify-center items-center">
                     <div class="text-center">
-                        <!-- <h2 v-if="gameStart == false" class="w-full text-xl animate-bounce">請幫起手的玩家點擊自己的時間開始遊戲</h2> -->
                         <p ref="play2Time">
                             {{ play2.min }}:{{ play2.sec }}
                         </p>
                     </div>
                 </div>
             </div>
+            <!-- 遊戲開始提示 -->
             <div v-if="gameStart == false" class="w-full h-auto flex justify-center">
                 <div class="flex absolute bottom-7">
-                    <h3 class="text-xl animate-bounce">請幫起手的玩家點擊自己的時間開始遊戲</h3>
+                    <h3 class="text-3xl animate-bounce">請幫起手的玩家點擊自己的時間開始遊戲</h3>
                 </div>
             </div>
         </div>
 
         <!-- 結束畫面 -->
-        <div @click="gameOver" ref="awards" class="w-full h-full fixed top-0 left-0 hidden text-white bg-gray-900">
+        <div @click="gameOver" ref="awards" class="w-full h-full fixed top-0 left-0 hidden text-white bg-gray-900 z-50">
             <div class="w-full h-full flex justify-center items-center text-9xl">
                 <h1 v-if="play1Running" class="animate-neon-dark">BLUE WIN!</h1>
                 <h1 v-if="play2Running" class="animate-neon-dark">RED WIN!</h1>
-                <h5 class="text-gray-500 text-xl absolute bottom-3">點擊畫面任意處退出</h5>
+                <h5 class="text-gray-500 text-3xl absolute bottom-7 animate-bounce">點擊畫面任意處退出</h5>
             </div>
         </div>
     </ContentLayout>
@@ -183,7 +185,9 @@ const play1Start = async () => {
         play1Running.value = true
 
         play1Time.value.classList.add('animate-bounce')
+        play1Time.value.classList.add('text-white')
         play2Time.value.classList.remove('animate-bounce')
+        play2Time.value.classList.remove('text-white')
     
         while (play1Running.value) {
             await reduceSec()
@@ -223,7 +227,9 @@ const play2Start = async () => {
         play2Running.value = true
 
         play2Time.value.classList.add('animate-bounce')
+        play2Time.value.classList.add('text-white')
         play1Time.value.classList.remove('animate-bounce')
+        play1Time.value.classList.remove('text-white')
     
         while (play2Running.value) {
             await reduceSec()
@@ -239,6 +245,8 @@ const gameOver = () => {
     play2Running.value = false 
     play1Time.value.classList.remove('animate-bounce')
     play2Time.value.classList.remove('animate-bounce')
+    play1Time.value.classList.remove('text-white')
+    play2Time.value.classList.remove('text-white')
     playGround.value.classList.add('hidden')
     awards.value.classList.add('hidden')
 }
