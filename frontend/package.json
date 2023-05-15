@@ -6,9 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "ionic:build": "npm run build",
-    "ionic:serve": "vite dev --host"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@capacitor/app": "5.0.1",
@@ -18,7 +16,6 @@
     "@capacitor/ios": "5.0.1",
     "@capacitor/keyboard": "5.0.1",
     "@capacitor/status-bar": "5.0.1",
-    "@ionic/vue": "^7.0.5",
     "@vuepic/vue-datepicker": "^5.0.1",
     "@vueuse/core": "^10.1.2",
     "flowbite": "^1.6.5",
